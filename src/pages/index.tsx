@@ -1,44 +1,44 @@
-import { Movie } from "@/components/Movies";
+import { Carousel } from "@/components/Caousel";
+import { Loader } from "@/components/Loader";
 import { fetcher } from "@/utils/fetcher";
-import { Box } from "@mantine/core";
-import { AxiosError } from "axios";
+import { Container } from "@mantine/core";
 import useSWR from "swr";
 
 export default function Home() {
   const {
-    data: popular,
-    isLoading,
-    error,
-  }: {
-    data: { results: Movie[] };
-    isLoading: boolean;
-    error?: AxiosError;
-  } = useSWR("/3/movie/popular", fetcher);
-  const limit = 20;
+    data: moviePopular,
+    isLoading: isLoadingMoviePopular,
+    error: errorMoviePopular,
+  } = useSWR(`/3/movie/popular`, fetcher);
+  const {
+    data: movieTop,
+    isLoading: isLoadingMovieTop,
+    error: errorMovieTop,
+  } = useSWR(`/3/movie/top_rated`, fetcher);
+  const {
+    data: seriePopular,
+    isLoading: isLoadingSeriePopular,
+    error: errorSeriePopular,
+  } = useSWR(`/3/tv/popular`, fetcher);
 
-  if (error) return <p>{error.code}</p>;
-  console.log(popular)
+  if (isLoadingMoviePopular || isLoadingMovieTop || isLoadingSeriePopular)
+    return <Loader />;
+  if (errorMoviePopular || errorMovieTop || errorSeriePopular)
+    return <div>error</div>;
 
   return (
-    <Box className="space-y-10 py-8">
-      <Movie
-        popular={popular}
-        title="Popular"
-        loading={isLoading}
-        limit={limit}
+    <Container size="xl" className="mt-6 flex flex-col space-y-6">
+      <Carousel
+        title="Filmes populares"
+        media={moviePopular.results}
+        type="movie"
       />
-      <Movie
-        popular={popular}
-        title="Tendências"
-        loading={isLoading}
-        limit={20}
+      <Carousel title="Mais elogiados" media={movieTop.results} type="movie" />
+      <Carousel
+        title="Series populares"
+        media={seriePopular.results}
+        type="tv"
       />
-      <Movie
-        popular={popular}
-        title="Gratuito"
-        loading={isLoading}
-        limit={20}
-      />
-    </Box>
+    </Container>
   );
 }

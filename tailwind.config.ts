@@ -8,5 +8,6 @@ const config: Config = {
   ],
   theme: {},
   plugins: [],
+  darkMode: ['class', '[data-mantine-color-scheme="dark"]'],
 };
 export default config;

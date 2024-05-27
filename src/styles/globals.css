@@ -17,5 +17,18 @@
 }
 
 body {
-  background-color: #F0F0F0;
+  @mixin light {
+    background-color: #f0f0f0;
+  }
+
+  @mixin dark {
+    background-color: #323232;
+  }
+}
+
+.mantine-Carousel-control {
+  &[data-inactive] {
+    opacity: 0;
+    cursor: default;
+  }
 }
