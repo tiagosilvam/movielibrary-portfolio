@@ -263,7 +263,7 @@ export default function Movie() {
         </Container>
       </Box>
       <Container className="mt-6 space-y-6" size="xl">
-        <Carousel title="Elenco" media={credits.cast} type="person" />
+        <Carousel title="Elenco principal" media={credits.cast} type="person" />
         <VideoCard videos={videos.results} />
         <Reviews mediaId={id} type="movie" />
         <Carousel

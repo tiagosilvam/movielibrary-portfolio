@@ -3,6 +3,7 @@ import { LoadingImage } from "@/components/Image";
 import { Loader } from "@/components/Loader";
 import { MediaRating } from "@/components/MediaRating";
 import { Reviews } from "@/components/Reviews";
+import { VideoCard } from "@/components/VideoCard";
 import { fetcher } from "@/utils/fetcher";
 import {
   ActionIcon,
@@ -63,16 +64,33 @@ export default function Movie() {
     fetcher,
   );
 
-  if (!movie || !credits || !releases || !recommendations || !providers)
+  const {
+    data: videos,
+    error: errorVideos,
+  }: { data: { results: Video[] }; error?: AxiosError } = useSWR(
+    id && `/3/tv/${id}/videos`,
+    fetcher,
+  );
+
+  if (
+    !movie ||
+    !credits ||
+    !releases ||
+    !recommendations ||
+    !providers ||
+    !videos
+  )
     return <Loader />;
   if (
     errorMovie ||
     errorCredits ||
     errorReleases ||
     errorRecommendations ||
-    errorProviders
+    errorProviders ||
+    errorVideos
   )
     return <div>error</div>;
+  console.log(videos.results);
 
   return (
     <Fragment>
@@ -158,6 +176,28 @@ export default function Movie() {
                 <Text className="font-bold">Última temporada:</Text>
                 <Text>Temporada {movie.number_of_seasons}</Text>
               </Box>
+              {providers.results.BR?.flatrate && (
+                <Box className="space-y-2">
+                  <Text>Disponivel nas plataformas:</Text>
+                  <Box className="flex space-x-2">
+                    {providers.results.BR.flatrate.map((provider, index) => (
+                      <Tooltip
+                        key={index}
+                        label={provider.provider_name}
+                        position="bottom"
+                      >
+                        <Box>
+                          <LoadingImage
+                            className="h-8 w-8 rounded-md"
+                            src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
+                            alt={provider.provider_name}
+                          />
+                        </Box>
+                      </Tooltip>
+                    ))}
+                  </Box>
+                </Box>
+              )}
             </Grid.Col>
             {movie.production_companies.length > 0 && (
               <Grid.Col className="flex flex-col space-y-1" span={12}>
@@ -214,11 +254,12 @@ export default function Movie() {
         </Container>
       </Box>
       <Container className="mt-6 space-y-6" size="xl">
-        <Carousel title="Elenco" media={credits.cast} type="person" />
+        <Carousel title="Elenco principal" media={credits.cast} type="person" />
+        <VideoCard videos={videos.results} />
         <Reviews mediaId={id} type="tv" />
         <Carousel
           title={`Recomendações baseadas em ${movie.original_name}`}
-          type="movie"
+          type="tv"
           media={recommendations.results}
         />
       </Container>
