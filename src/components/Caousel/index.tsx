@@ -18,7 +18,7 @@ export const Carousel = ({
     <Box className="space-y-2">
       <Text className="text-lg font-semibold">{title}</Text>
       {media.length > 0 ? (
-        <MUICarousel slideSize="144px" slidesToScroll={3} align="start" loop>
+        <MUICarousel slideSize="144px" slidesToScroll={2} align="start" loop>
           {media.map((media, index) => (
             <Card
               key={index}

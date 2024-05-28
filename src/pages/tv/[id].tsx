@@ -159,57 +159,31 @@ export default function Movie() {
                 <Text className="font-bold">Última temporada:</Text>
                 <Text>Temporada {movie.number_of_seasons}</Text>
               </Box>
-              {movie.production_companies.length > 0 && (
-                <Grid.Col className="flex flex-col space-y-1" span={12}>
-                  <Text className="text-white">Produzido por:</Text>
-                  <Box className="flex space-x-2">
-                    {movie.production_companies.map((item, index) => (
-                      <Tooltip
-                        className="flex flex-col items-center justify-center"
-                        key={index}
-                        label={item.name}
-                        position="bottom"
-                      >
-                        <Box className="rounded-md bg-gray-500 p-1">
-                          {item.logo_path ? (
-                            <LoadingImage
-                              className="h-6 w-auto min-w-6"
-                              src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
-                              alt={item.name}
-                            />
-                          ) : (
-                            <ImageNotSupported />
-                          )}
-                        </Box>
-                      </Tooltip>
-                    ))}
-                  </Box>
-                </Grid.Col>
-              )}
             </Grid.Col>
             {movie.production_companies.length > 0 && (
               <Grid.Col className="flex flex-col space-y-1" span={12}>
                 <Text className="text-white">Produzido por:</Text>
                 <Box className="flex space-x-2">
-                  {movie.production_companies.map(
-                    (item, index) =>
-                      item.logo_path && (
-                        <Tooltip
-                          className="flex flex-col items-center justify-center"
-                          key={index}
-                          label={item.name}
-                          position="bottom"
-                        >
-                          <Box className="rounded-md bg-gray-300 p-1">
-                            <LoadingImage
-                              className="h-6 w-auto min-w-6"
-                              src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
-                              alt={item.name}
-                            />
-                          </Box>
-                        </Tooltip>
-                      ),
-                  )}
+                  {movie.production_companies.map((item, index) => (
+                    <Tooltip
+                      className="flex flex-col items-center justify-center"
+                      key={index}
+                      label={item.name}
+                      position="bottom"
+                    >
+                      <Box className="rounded-md bg-gray-500 p-1">
+                        {item.logo_path ? (
+                          <LoadingImage
+                            className="h-6 w-auto min-w-6"
+                            src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
+                            alt={item.name}
+                          />
+                        ) : (
+                          <ImageNotSupported />
+                        )}
+                      </Box>
+                    </Tooltip>
+                  ))}
                 </Box>
               </Grid.Col>
             )}

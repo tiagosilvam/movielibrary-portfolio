@@ -52,7 +52,7 @@ export default function Movie() {
           </Grid.Col>
         ))}
       </Grid>
-      {search.results.length > 0 && (
+      {search.results.length > 1 && (
         <Pagination
           className="self-center"
           value={page}

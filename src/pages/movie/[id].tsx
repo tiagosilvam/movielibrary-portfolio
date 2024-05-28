@@ -233,7 +233,6 @@ export default function Movie() {
                 </Box>
               </Grid.Col>
             )}
-            <Text>{window.isSecureContext ? "true" : "false"} KKKKK</Text>
             <CopyButton value={window.location.href}>
               {({ copied, copy }) => (
                 <Tooltip label="Copiar link">
