@@ -1,6 +1,7 @@
 import { Carousel } from "@/components/Caousel";
 import { LoadingImage } from "@/components/Image";
 import { Loader } from "@/components/Loader";
+import { MediaRating } from "@/components/MediaRating";
 import { Reviews } from "@/components/Reviews";
 import { fetcher } from "@/utils/fetcher";
 import {
@@ -101,29 +102,27 @@ export default function Movie() {
                   {movie.original_name} ({movie.first_air_date.substring(0, 4)})
                 </Text>
                 <Box className="flex items-center space-x-1">
-                  <Box className="mr-1 min-h-6 min-w-6 rounded-md bg-green-600 p-1">
-                    <Text className="text-center text-xs font-bold">
-                      {
-                        releases.results.filter(
-                          (item) => item.iso_3166_1 === "BR",
-                        )[0]?.rating
-                      }
-                    </Text>
-                  </Box>
                   <Text className="text-xs">
                     {new Date(movie.first_air_date).toLocaleDateString()} -{" "}
-                  </Text>
-                  {movie.genres.map((genre, index) => (
-                    <Text className="text-xs" key={index}>
-                      {genre.name}
-                      {index !== movie.genres.length - 1 && ","}
-                    </Text>
-                  ))}
-                  <Text className="text-xs">
-                    {" "}
-                    - {movie.number_of_episodes} episódios
+                    {movie.genres.map((genre, index) => (
+                      <Fragment key={index}>
+                        {genre.name}
+                        {index !== movie.genres.length - 1 && ", "}
+                      </Fragment>
+                    ))}{" "}
+                    - {movie.number_of_seasons} temporadas
                   </Text>
                 </Box>
+              </Box>
+              <Box className="flex space-x-2">
+                <Text className="font-bold">Classificação indicativa</Text>
+                <MediaRating
+                  certification={
+                    releases.results.filter(
+                      (item) => item.iso_3166_1 === "BR",
+                    )[0]?.rating
+                  }
+                />
               </Box>
               <Box className="flex items-center space-x-2">
                 <RingProgress
@@ -200,7 +199,8 @@ export default function Movie() {
                         .then(() => copy());
                       notifications.show({
                         color: "green",
-                        message: "Link copiado com sucesso!",
+                        icon: <Check />,
+                        message: "Copiado para a área de transferência.",
                       });
                     }}
                     size="lg"

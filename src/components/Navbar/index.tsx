@@ -50,7 +50,7 @@ export const Navbar = () => {
         onClick={() => toggleColorScheme()}
         lightHidden
       >
-        <LightMode />
+        <LightMode className="text-yellow-500" />
       </ActionIcon>
     </Container>
   );

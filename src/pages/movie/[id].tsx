@@ -19,6 +19,8 @@ import useSWR from "swr";
 import { VideoCard } from "@/components/VideoCard";
 import { Carousel } from "@/components/Caousel";
 import { IosShare, ImageNotSupported, Check } from "@mui/icons-material";
+import { Fragment } from "react";
+import { MediaRating } from "@/components/MediaRating";
 
 export default function Movie() {
   const {
@@ -118,27 +120,27 @@ export default function Movie() {
                   {movie.title} ({movie.release_date.substring(0, 4)})
                 </Text>
                 <Box className="flex items-center space-x-1">
-                  <Box className="mr-1 min-h-6 min-w-6 rounded-md bg-green-600 p-1">
-                    <Text className="text-center text-xs font-bold">
-                      {releases.results.filter(
-                        (item) => item.iso_3166_1 === "BR",
-                      )[0]?.release_dates[0]?.certification === "" ?? "N/A"}
-                    </Text>
-                  </Box>
                   <Text className="text-xs">
                     {new Date(movie.release_date).toLocaleDateString()} -{" "}
-                  </Text>
-                  {movie.genres.map((genre, index) => (
-                    <Text className="text-xs" key={index}>
-                      {genre.name}
-                      {index !== movie.genres.length - 1 && ","}
-                    </Text>
-                  ))}
-                  <Text className="text-xs">
-                    {" "}
+                    {movie.genres.map((genre, index) => (
+                      <Fragment key={index}>
+                        {genre.name}
+                        {index !== movie.genres.length - 1 && ", "}
+                      </Fragment>
+                    ))}{" "}
                     - {Math.floor(movie.runtime / 60)}h {movie.runtime % 60}min
                   </Text>
                 </Box>
+              </Box>
+              <Box className="flex space-x-2">
+                <Text className="font-bold">Classificação indicativa</Text>
+                <MediaRating
+                  certification={
+                    releases.results.filter(
+                      (item) => item.iso_3166_1 === "BR",
+                    )[0]?.release_dates[0]?.certification
+                  }
+                />
               </Box>
               <Box className="flex items-center space-x-2">
                 <RingProgress
@@ -246,7 +248,8 @@ export default function Movie() {
                         .then(() => copy());
                       notifications.show({
                         color: "green",
-                        message: "Link copiado com sucesso!",
+                        icon: <Check />,
+                        message: "Copiado para a área de transferência.",
                       });
                     }}
                     size="lg"

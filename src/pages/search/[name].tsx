@@ -24,7 +24,6 @@ export default function Movie() {
 
   if (!search) return <Loader />;
   if (errorMovie) return <div>error</div>;
-  console.log(search);
 
   return (
     <Container className="mt-6 flex flex-col space-y-6" size="xl">

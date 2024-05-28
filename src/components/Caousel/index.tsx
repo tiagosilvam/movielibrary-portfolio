@@ -37,8 +37,8 @@ export const Carousel = ({
               }
               title={(media as Serie | Person).name ?? (media as Movie).title}
               label={
-                (media as Movie).release_date ??
-                (media as Serie).first_air_date ??
+                (media as Movie).release_date?.substring(0, 4) ??
+                (media as Serie).first_air_date?.substring(0, 4) ??
                 (media as Person).character
               }
               onClick={() => push(`/${type}/${media.id}`)}
