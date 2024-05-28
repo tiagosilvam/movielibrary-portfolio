@@ -15,7 +15,7 @@ import {
 import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
-  const { toggleColorScheme } = useMantineColorScheme();
+  const { toggleColorScheme, colorScheme } = useMantineColorScheme();
   const { push } = useRouter();
 
   return (
@@ -38,19 +38,12 @@ export const Navbar = () => {
           }
         }}
       />
-      <ActionIcon
-        variant="transparent"
-        onClick={() => toggleColorScheme()}
-        darkHidden
-      >
-        <DarkMode />
-      </ActionIcon>
-      <ActionIcon
-        variant="transparent"
-        onClick={() => toggleColorScheme()}
-        lightHidden
-      >
-        <LightMode className="text-yellow-500" />
+      <ActionIcon variant="transparent" onClick={() => toggleColorScheme()}>
+        {colorScheme === "dark" ? (
+          <DarkMode />
+        ) : (
+          <LightMode className="text-yellow-500" />
+        )}
       </ActionIcon>
     </Container>
   );
