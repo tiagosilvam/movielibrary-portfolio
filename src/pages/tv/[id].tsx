@@ -4,13 +4,17 @@ import { Loader } from "@/components/Loader";
 import { Reviews } from "@/components/Reviews";
 import { fetcher } from "@/utils/fetcher";
 import {
+  ActionIcon,
   Box,
   Container,
+  CopyButton,
   Grid,
   RingProgress,
   Text,
   Tooltip,
 } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+import { Check, ImageNotSupported, IosShare } from "@mui/icons-material";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -20,6 +24,7 @@ export default function Movie() {
   const {
     query: { id },
   } = useRouter();
+
   const {
     data: movie,
     error: errorMovie,
@@ -154,52 +159,83 @@ export default function Movie() {
                 <Text className="font-bold">Última temporada:</Text>
                 <Text>Temporada {movie.number_of_seasons}</Text>
               </Box>
-              {providers.results.BR?.rent && (
-                <Box className="space-y-2">
-                  <Text>Disponivel nas plataformas:</Text>
+              {movie.production_companies.length > 0 && (
+                <Grid.Col className="flex flex-col space-y-1" span={12}>
+                  <Text className="text-white">Produzido por:</Text>
                   <Box className="flex space-x-2">
-                    {providers.results.BR.rent.map((provider, index) => (
+                    {movie.production_companies.map((item, index) => (
                       <Tooltip
+                        className="flex flex-col items-center justify-center"
                         key={index}
-                        label={provider.provider_name}
+                        label={item.name}
                         position="bottom"
                       >
-                        <LoadingImage
-                          className="h-8 w-8 rounded-md"
-                          src={`https://image.tmdb.org/t/p/original${provider.logo_path}`}
-                          alt={provider.provider_name}
-                        />
+                        <Box className="rounded-md bg-gray-500 p-1">
+                          {item.logo_path ? (
+                            <LoadingImage
+                              className="h-6 w-auto min-w-6"
+                              src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
+                              alt={item.name}
+                            />
+                          ) : (
+                            <ImageNotSupported />
+                          )}
+                        </Box>
                       </Tooltip>
                     ))}
                   </Box>
-                </Box>
+                </Grid.Col>
               )}
             </Grid.Col>
             {movie.production_companies.length > 0 && (
-              <Grid.Col className="flex space-x-2" span={12}>
+              <Grid.Col className="flex flex-col space-y-1" span={12}>
                 <Text className="text-white">Produzido por:</Text>
-                {movie.production_companies.map((item, index) =>
-                  item.logo_path ? (
-                    <Tooltip
-                      className="flex flex-col items-center justify-center"
-                      key={index}
-                      label={item.name}
-                      position="bottom"
-                    >
-                      <Box className="rounded-md bg-gray-300 p-1">
-                        <LoadingImage
-                          className="h-6 min-w-6"
-                          src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
-                          alt={item.name}
-                        />
-                      </Box>
-                    </Tooltip>
-                  ) : (
-                    "A"
-                  ),
-                )}
+                <Box className="flex space-x-2">
+                  {movie.production_companies.map(
+                    (item, index) =>
+                      item.logo_path && (
+                        <Tooltip
+                          className="flex flex-col items-center justify-center"
+                          key={index}
+                          label={item.name}
+                          position="bottom"
+                        >
+                          <Box className="rounded-md bg-gray-300 p-1">
+                            <LoadingImage
+                              className="h-6 w-auto min-w-6"
+                              src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
+                              alt={item.name}
+                            />
+                          </Box>
+                        </Tooltip>
+                      ),
+                  )}
+                </Box>
               </Grid.Col>
             )}
+            <CopyButton value={window.location.href}>
+              {({ copied, copy }) => (
+                <Tooltip label="Copiar link">
+                  <ActionIcon
+                    className="absolute bottom-4 right-4"
+                    variant="subtle"
+                    color={copied ? "teal" : "blue"}
+                    onClick={async () => {
+                      await navigator.clipboard
+                        .writeText(location.href)
+                        .then(() => copy());
+                      notifications.show({
+                        color: "green",
+                        message: "Link copiado com sucesso!",
+                      });
+                    }}
+                    size="lg"
+                  >
+                    {copied ? <Check /> : <IosShare />}
+                  </ActionIcon>
+                </Tooltip>
+              )}
+            </CopyButton>
           </Grid>
         </Container>
       </Box>

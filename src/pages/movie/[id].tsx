@@ -2,9 +2,12 @@ import { LoadingImage } from "@/components/Image";
 import { Loader } from "@/components/Loader";
 import { Reviews } from "@/components/Reviews";
 import { fetcher } from "@/utils/fetcher";
+import { notifications } from "@mantine/notifications";
 import {
+  ActionIcon,
   Box,
   Container,
+  CopyButton,
   Grid,
   RingProgress,
   Text,
@@ -15,6 +18,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { VideoCard } from "@/components/VideoCard";
 import { Carousel } from "@/components/Caousel";
+import { IosShare, ImageNotSupported, Check } from "@mui/icons-material";
 
 export default function Movie() {
   const {
@@ -206,28 +210,53 @@ export default function Movie() {
               <Grid.Col className="flex flex-col space-y-1" span={12}>
                 <Text className="text-white">Produzido por:</Text>
                 <Box className="flex space-x-2">
-                  {movie.production_companies.map(
-                    (item, index) =>
-                      item.logo_path && (
-                        <Tooltip
-                          className="flex flex-col items-center justify-center"
-                          key={index}
-                          label={item.name}
-                          position="bottom"
-                        >
-                          <Box className="rounded-md bg-gray-300 p-1">
-                            <LoadingImage
-                              className="h-6 w-auto min-w-6"
-                              src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
-                              alt={item.name}
-                            />
-                          </Box>
-                        </Tooltip>
-                      ),
-                  )}
+                  {movie.production_companies.map((item, index) => (
+                    <Tooltip
+                      className="flex flex-col items-center justify-center"
+                      key={index}
+                      label={item.name}
+                      position="bottom"
+                    >
+                      <Box className="rounded-md bg-gray-500 p-1">
+                        {item.logo_path ? (
+                          <LoadingImage
+                            className="h-6 w-auto min-w-6"
+                            src={`https://image.tmdb.org/t/p/original${item.logo_path}`}
+                            alt={item.name}
+                          />
+                        ) : (
+                          <ImageNotSupported />
+                        )}
+                      </Box>
+                    </Tooltip>
+                  ))}
                 </Box>
               </Grid.Col>
             )}
+            <Text>{window.isSecureContext ? "true" : "false"} KKKKK</Text>
+            <CopyButton value={window.location.href}>
+              {({ copied, copy }) => (
+                <Tooltip label="Copiar link">
+                  <ActionIcon
+                    className="absolute bottom-4 right-4"
+                    variant="subtle"
+                    color={copied ? "teal" : "blue"}
+                    onClick={async () => {
+                      await navigator.clipboard
+                        .writeText(location.href)
+                        .then(() => copy());
+                      notifications.show({
+                        color: "green",
+                        message: "Link copiado com sucesso!",
+                      });
+                    }}
+                    size="lg"
+                  >
+                    {copied ? <Check /> : <IosShare />}
+                  </ActionIcon>
+                </Tooltip>
+              )}
+            </CopyButton>
           </Grid>
         </Container>
       </Box>
