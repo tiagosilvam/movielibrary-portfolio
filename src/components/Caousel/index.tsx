@@ -1,7 +1,8 @@
 import { Carousel as MUICarousel } from "@mantine/carousel";
 import { Card } from "@/components/Card";
 import { useRouter } from "next/navigation";
-import { Box, Text } from "@mantine/core";
+import { Box, Text, useMantineTheme } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 
 export const Carousel = ({
   title,
@@ -13,12 +14,20 @@ export const Carousel = ({
   type: "movie" | "tv" | "person";
 }) => {
   const { push } = useRouter();
+  const theme = useMantineTheme();
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   return (
     <Box className="space-y-2">
       <Text className="text-lg font-semibold">{title}</Text>
       {media.length > 0 ? (
-        <MUICarousel slideSize="144px" slidesToScroll={2} align="start" loop>
+        <MUICarousel
+          slideSize="144px"
+          slidesToScroll={mobile ? 2 : 4}
+          align="start"
+          loop
+          withControls={mobile ? media.length > 3 : media.length > 8}
+        >
           {media.map((media, index) => (
             <Card
               key={index}
