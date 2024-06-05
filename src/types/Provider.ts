@@ -5,7 +5,7 @@ type ProviderInfo = {
   provider_name: string;
 };
 
-type Provider = {
+type Providers = {
   id: 238;
   results: {
     [key: string]: {

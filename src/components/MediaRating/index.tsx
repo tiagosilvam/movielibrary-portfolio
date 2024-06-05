@@ -1,5 +1,3 @@
-import { Box, Text } from "@mantine/core";
-
 const getColor = (certification: string) => {
   switch (certification) {
     case "L":
@@ -25,10 +23,10 @@ export const MediaRating = ({ certification }: { certification: string }) => {
   }
 
   return (
-    <Box
+    <div
       className={`${getColor(certification)} mr-1 min-h-6 min-w-6 rounded-md p-1`}
     >
-      <Text className="text-center text-xs font-bold">{certification}</Text>
-    </Box>
+      <p className="text-center text-xs font-bold">{certification}</p>
+    </div>
   );
 };

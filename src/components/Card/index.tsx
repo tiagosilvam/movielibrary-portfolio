@@ -1,5 +1,4 @@
-import { Box, Text } from "@mantine/core";
-import { LoadingImage } from "../Image";
+import { LoadingImage } from "@/components/LoadingImage";
 
 export const Card = ({
   image,
@@ -10,23 +9,23 @@ export const Card = ({
   image: string;
   title: string;
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
-    <Box className="p-2" onClick={onClick}>
-      <Box className="group min-h-72 w-36 cursor-pointer">
+    <div className="group h-[302px] max-w-40 cursor-pointer" onClick={onClick}>
+      <div className="overflow-hidden rounded-lg group-hover:shadow-lg">
         <LoadingImage
-          className="h-52 w-full rounded-lg group-hover:scale-105 group-hover:shadow-xl"
-          src={`https://media.themoviedb.org/t/p/w300${image}`}
+          className="h-60 w-40 transition-all group-hover:scale-105"
+          src={image}
           alt={title}
         />
-        <Box className="mt-2 px-2 text-center">
-          <Text className="line-clamp-2 text-sm font-medium group-hover:font-semibold">
-            {title}
-          </Text>
-          <Text className="line-clamp-2 text-sm text-gray-500">{label}</Text>
-        </Box>
-      </Box>
-    </Box>
+      </div>
+      <div className="pt-1.5 text-center">
+        <p className="line-clamp-2 text-sm font-medium text-foreground group-hover:font-bold">
+          {title}
+        </p>
+        <p className="line-clamp-2 text-xs text-muted-foreground">{label}</p>
+      </div>
+    </div>
   );
 };

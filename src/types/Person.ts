@@ -2,13 +2,13 @@ type Person = {
   adult: boolean;
   gender: number;
   id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
+  known_for_department: boolean;
+  name: boolean;
+  original_name: boolean;
   popularity: number;
   profile_path: string;
   cast_id: number;
-  character: string;
-  credit_id: string;
+  character: boolean;
+  credit_id: boolean;
   order: number;
 };
