@@ -240,11 +240,15 @@ export default function Media({
             <TabsTrigger value="recommendations">Recomendações</TabsTrigger>
           </TabsList>
           <TabsContent value="similar">
-            <MediaCarousel url={`/3/${mediaType}/${media.id}/similar`} />
+            <MediaCarousel
+              url={`/3/${mediaType}/${media.id}/similar`}
+              type={mediaType}
+            />
           </TabsContent>
           <TabsContent value="recommendations">
             <MediaCarousel
               url={`/3/${mediaType}/${media.id}/recommendations`}
+              type={mediaType}
             />
           </TabsContent>
         </Tabs>
