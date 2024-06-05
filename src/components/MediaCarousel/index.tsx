@@ -70,7 +70,9 @@ export const CarouselComponent = ({
                   }
                   onClick={() => {
                     if (type !== "person") {
-                      push(`/${type ?? (item as Movie).media_type}/${item.id}`);
+                      push(
+                        `/${type ?? (item as Movie | TV).media_type}/${item.id}`,
+                      );
                     }
                   }}
                 />
