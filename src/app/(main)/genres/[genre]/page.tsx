@@ -47,7 +47,7 @@ const Component = ({
             <Link
               className="justify-self-center"
               key={item.id}
-              href={`/movie/${item.id}`}
+              href={`/${mediaType}/${item.id}`}
             >
               <Card
                 image={item.poster_path}
