@@ -7,7 +7,7 @@ export default function Home() {
       <Tabs defaultValue="day">
         <h2 className="mb-2 text-xl font-semibold tracking-tight">Tenências</h2>
         <TabsList className="grid w-full grid-cols-2 md:w-96">
-          <TabsTrigger value="day">Home</TabsTrigger>
+          <TabsTrigger value="day">Hoje</TabsTrigger>
           <TabsTrigger value="week">Esta semana</TabsTrigger>
         </TabsList>
         <TabsContent value="day">
