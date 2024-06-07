@@ -45,7 +45,7 @@ export const Reviews = ({
             <div className="flex items-center space-x-3">
               <LoadingImage
                 className="h-11 w-11 rounded-full"
-                src={`https://image.tmdb.org/t/p/original/${result.author_details.avatar_path}`}
+                src={result.author_details.avatar_path}
                 alt={result.author}
               />
               <div className="flex flex-col">
