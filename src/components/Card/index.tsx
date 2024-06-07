@@ -21,10 +21,12 @@ export const Card = ({
         />
       </div>
       <div className="pt-1.5 text-center">
-        <p className="line-clamp-2 text-sm font-medium text-foreground group-hover:font-bold">
+        <span className="line-clamp-2 text-sm font-medium text-foreground group-hover:font-bold">
           {title}
-        </p>
-        <p className="line-clamp-2 text-xs text-muted-foreground">{label}</p>
+        </span>
+        <span className="line-clamp-2 text-xs text-muted-foreground">
+          {label}
+        </span>
       </div>
     </div>
   );

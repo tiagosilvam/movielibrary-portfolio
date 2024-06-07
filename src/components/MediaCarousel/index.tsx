@@ -41,7 +41,7 @@ export const CarouselComponent = ({
       </div>
     );
   } else if (error) {
-    return <p className="text-xs italic text-muted">ERROR</p>;
+    return <span className="text-xs italic text-muted">ERROR</span>;
   }
 
   return (
@@ -83,9 +83,9 @@ export const CarouselComponent = ({
           <CarouselNext className="animate-pulse" />
         </Carousel>
       ) : (
-        <p className="text-sm italic text-muted-foreground">
+        <span className="text-sm italic text-muted-foreground">
           Não existem informações serem exibidas.
-        </p>
+        </span>
       )}
     </Fragment>
   );

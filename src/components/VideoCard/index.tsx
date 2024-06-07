@@ -33,9 +33,9 @@ export const VideoCard = ({ videos }: { videos: Video[] }) => {
             <CarouselPrevious />
           </Carousel>
         ) : (
-          <p className="text-sm italic text-gray-500">
+          <span className="text-sm italic text-gray-500">
             Não existem mídias até o momento.
-          </p>
+          </span>
         )}
       </div>
     </div>

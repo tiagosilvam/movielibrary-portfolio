@@ -30,7 +30,7 @@ const Component = ({
   }, [media?.total_pages]);
 
   if (error) {
-    return <p>Error</p>;
+    return <span>Error</span>;
   }
 
   return (
@@ -55,10 +55,10 @@ const Component = ({
             </Link>
           ))
         ) : (
-          <p className="col-span-3 text-sm italic text-muted-foreground">
+          <span className="col-span-3 text-sm italic text-muted-foreground">
             Sem resultados para &apos;{keyword}&apos; em{" "}
             {type === "tv" ? "series" : "filmes"}.
-          </p>
+          </span>
         )}
       </div>
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />

@@ -6,7 +6,6 @@ import { MediaCarousel } from "@/components/MediaCarousel";
 import { MediaRating } from "@/components/MediaRating";
 import { Reviews } from "@/components/Reviews";
 import { VideoCard } from "@/components/VideoCard";
-import { Separator } from "@/components/ui/separator";
 import { fetcher } from "@/lib/fetcher";
 import { AxiosError } from "axios";
 import { notFound } from "next/navigation";
@@ -97,11 +96,9 @@ export default function Media({
     return notFound();
   } else if (errorMedia || errorProviders || errorReleaseDates || errorVideos) {
     return (
-      <div>
-        <p>
-          Oops, não foi possível carregar as informações da mídia no momento.
-        </p>
-      </div>
+      <span>
+        Oops, não foi possível carregar as informações da mídia no momento.
+      </span>
     );
   }
 
@@ -125,19 +122,22 @@ export default function Media({
             />
             <div className="col-span-12 space-y-4 md:col-span-9">
               <div className="space-y-1">
-                <p className="text-3xl font-medium md:text-4xl">
-                  {media.title ?? media.name}
-                </p>
-                <div className="flex items-center space-x-3 text-sm">
-                  <p>
+                <div className="space-x-1 text-3xl">
+                  <span className="font-medium md:text-4xl">
+                    {media.title ?? media.name}
+                  </span>
+                  <span className="text-muted-foreground">
+                    (
                     {media.release_date || media.first_air_date
                       ? new Date(
                           media.release_date ?? media.first_air_date,
-                        ).toLocaleDateString("pt-br")
+                        ).getFullYear()
                       : "N/A"}
-                  </p>
-                  <Separator className="h-3 bg-white" orientation="vertical" />
-                  <p>
+                    )
+                  </span>
+                </div>
+                <div className="space-x-1 text-sm">
+                  <span>
                     {media.genres.length > 0
                       ? media.genres.map((genre, index) => (
                           <Fragment key={index}>
@@ -146,36 +146,38 @@ export default function Media({
                           </Fragment>
                         ))
                       : "N/A"}
-                  </p>
-                  <Separator className="h-3 bg-white" orientation="vertical" />
-                  <p>{getMediaLength(media, mediaType)}</p>
+                  </span>
+                  <span>-</span>
+                  <span>{getMediaLength(media, mediaType)}</span>
                 </div>
               </div>
               <div className="flex items-center space-x-2">
                 <Star className="text-yellow-500" />
-                <p className="font-medium">
+                <span className="font-medium">
                   Avaliação geral {Math.floor((media.vote_average / 10) * 100)}%
-                </p>
+                </span>
               </div>
               <div className="flex space-x-2">
-                <p className="font-medium">Classificação indicativa</p>
+                <span className="font-medium">Classificação indicativa</span>
                 <MediaRating certification={getRating(releaseDates)} />
               </div>
-              <div className="space-y-1">
-                <p className="text-lg font-medium">Resumo</p>
+              <div className="flex flex-col space-y-1">
+                <span className="text-lg font-medium">Resumo</span>
                 {media.overview === "" ? (
-                  <p className="text-sm italic text-gray-500">
+                  <span className="text-sm italic text-gray-500">
                     Este filme ainda não possui um resumo em português.
-                  </p>
+                  </span>
                 ) : (
-                  <p>{media.overview}</p>
+                  <span>{media.overview}</span>
                 )}
               </div>
               {providers.results.BR?.[
                 mediaType === "movie" ? "rent" : "flatrate"
               ] && (
                 <div className="space-y-2">
-                  <p className="font-medium">Disponivel nas plataformas:</p>
+                  <span className="font-medium">
+                    Disponivel nas plataformas:
+                  </span>
                   <div className="flex space-x-2">
                     {providers.results.BR[
                       mediaType === "movie" ? "rent" : "flatrate"
@@ -200,7 +202,7 @@ export default function Media({
             <div className="col-span-12 flex flex-col space-y-1">
               {media.production_companies.length > 0 && (
                 <Fragment>
-                  <p className="text-white">Produzido por:</p>
+                  <span className="text-white">Produzido por:</span>
                   <div className="flex space-x-2">
                     {media.production_companies.map((item, index) => (
                       <Tooltip key={index} delayDuration={100}>

@@ -59,9 +59,9 @@ const Component = ({
             </Link>
           ))
         ) : (
-          <p className="col-span-3 text-sm italic text-muted-foreground">
+          <span className="col-span-3 text-sm italic text-muted-foreground">
             Sem resultados.
-          </p>
+          </span>
         )}
       </div>
       <Pagination page={page} totalPages={totalPages} setPage={setPage} />
