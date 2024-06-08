@@ -165,7 +165,7 @@ export default function Media({
                 <span className="text-lg font-medium">Resumo</span>
                 {media.overview === "" ? (
                   <span className="text-sm italic text-gray-500">
-                    Este filme ainda não possui um resumo em português.
+                    Esta mídia ainda não possui um resumo em português.
                   </span>
                 ) : (
                   <span>{media.overview}</span>
