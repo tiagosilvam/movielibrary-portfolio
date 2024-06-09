@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <div className="container space-y-8 pt-4">
       <Tabs defaultValue="day">
-        <h2 className="mb-2 text-xl font-semibold tracking-tight">Tenências</h2>
+        <h2 className="mb-2 text-xl font-semibold tracking-tight">
+          Tendências
+        </h2>
         <TabsList className="grid w-full grid-cols-2 md:w-96">
           <TabsTrigger value="day">Hoje</TabsTrigger>
           <TabsTrigger value="week">Esta semana</TabsTrigger>

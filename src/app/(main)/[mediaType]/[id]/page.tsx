@@ -227,7 +227,7 @@ export default function Media({
       </div>
       <div className="container mt-4 space-y-8">
         <MediaCarousel
-          title="Elenco pricipal"
+          title="Elenco principal"
           url={`/3/${mediaType}/${id}/credits?language=en-US`}
           type="person"
         />
